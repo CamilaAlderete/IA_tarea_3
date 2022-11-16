@@ -3,9 +3,7 @@
 
 import os
 
-bp = "instancias" + os.sep
-
-qap_instances = [bp + "qapUni.75.0.1.qap.txt", bp + "qapUni.75.p75.1.qap.txt"]
+qap_instances = ["input" + os.sep + "qapUni.75.0.1.qap.txt", "input" + os.sep + "qapUni.75.p75.1.qap.txt"]
 
 
 def parse_qap():

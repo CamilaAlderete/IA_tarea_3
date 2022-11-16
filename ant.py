@@ -27,8 +27,7 @@ class Ant:
 	def probability(self, city_number, feasible_nodes):
 		"""
 		@param city_number: ciudad actual.
-
-		@feasible_nodes: lista de posibles ciudades a ser visitadas en el siguiente movimiento.
+		@param feasible_nodes: lista de posibles ciudades a ser visitadas en el siguiente movimiento.
 		"""
 		lamda = self.ant_number / self.total_ants #lambda es una palabra reservada
 		total = 0

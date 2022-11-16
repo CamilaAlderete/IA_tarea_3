@@ -123,7 +123,7 @@ class NSGA:
         m = 0.0
         import sys
         uppers = [0 for _ in range(len(sol.objectives))]
-        lowers = [sys.maxint for _ in range(len(sol.objectives))]
+        lowers = [sys.maxsize for _ in range(len(sol.objectives))]
         for solution in front:
             for i, v in enumerate(solution.evaluation):
                 if v > uppers[i]:
@@ -198,6 +198,7 @@ class NSGA:
 
 
 def test_qap(n = 5, i = 0):
+    print("Instancia : ", i)
     total_ind = 20
     total_generations = 100
     p, q = 2, 5

@@ -65,6 +65,9 @@ class GaSolution(Solution, object):
                 if obj_eval <= other.evaluation[i]:
                     band = True
         return band
+    
+    def __hash__(self):
+        return hash(tuple(self.solution))
 
 
 class GeneticOperators:
