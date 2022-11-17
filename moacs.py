@@ -49,7 +49,7 @@ class Moacs(Moaco):
 				
 				for objective_number in range(len(ant.average_obj)):
 					product = product * ant.average_obj[objective_number]
-				tausubzerop = 1 / len(self.ferom_mat) * product #len ferom_mat es la cant de nodos
+				tausubzerop = 1 / len(self.ferom_mat) * product 
 
 				if(tausubzerop > self.tausubzero):
 					self.tausubzero = tausubzerop
@@ -61,7 +61,7 @@ class Moacs(Moaco):
 
 
 	def global_updating(self, product):
-		for solution in self.pareto_set.solutions: #solution es una lista que tiene cada nodo de la solucion como elemento
+		for solution in self.pareto_set.solutions:
 			for i in range(len(solution.solution)-1):
 				s = solution.solution[i]
 				d = solution.solution[i+1]

@@ -5,12 +5,10 @@ import math
 
 class Metric():
     def evaluate(self, pareto_front):
-        raise NotImplementedError("evaluate method has to be implemented.")
+        raise NotImplementedError()
 
     def distance(self, a, b):
-        """
-        Calcula la distancia Euclidiana entre a y b
-                """
+
         dist = 0.0
         for v1, v2 in zip(a, b):
             dist += math.pow(v1-v2, 2)

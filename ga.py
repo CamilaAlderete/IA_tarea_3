@@ -4,8 +4,6 @@
 from solution import Solution
 
 import numpy as np
-#from scipy.spatial.distance import pdist
-
 import random, sys, math
 
 class GaSolution(Solution, object):
@@ -15,11 +13,6 @@ class GaSolution(Solution, object):
         self.evaluation = self.evaluate()
     
     def distance(self, other, u, l):
-        """
-        Calcula la distancia Euclidiana entre dos individuos
-        
-        @param other: el otro individuo
-        """
         me_objs = self.evaluation
         other_objs = other.evaluation
         dist = 0.0
@@ -31,11 +24,6 @@ class GaSolution(Solution, object):
         return math.sqrt(dist)
 
     def solutions_distance(self, other):
-        """
-        Calcula la distancia Euclidiana entre dos individuos
-        
-        @param other: el otro individuo
-        """
         me_objs = self.evaluate()
         other_objs = other.evaluate()
         dist = 0.0
@@ -44,18 +32,12 @@ class GaSolution(Solution, object):
         return math.sqrt(dist)
     
     def __cmp__(self, other):
-        """
-        Retorna negativo si x<y, cero si x==y, positivo si x>y
-        """
         return self.fitness - other.fitness
 
     def dominates(self, other):
-        """ 
-        @param other: otra solución a comparar.
-        """
         if other.__class__.__name__ == "Solution":
             return Solution.dominates(self, other)
-        #Contexto de minimización
+
         band = False 
         for i, obj_eval in enumerate(self.evaluation):
             if obj_eval > other.evaluation[i]:
@@ -73,20 +55,7 @@ class GaSolution(Solution, object):
 class GeneticOperators:
 
     def crossover(self, sol_a, sol_b):
-        """
-        Crossover de las soluciones dadas como parametros.
-        Se toma el primer elemento de sol_a y se copia en el hijo. Luego se 
-        consulta el valor del primer elemento de sol_b y se averigua su 
-        posicion en sol_a, luego se copia el elemento de sol_a en el hijo
-        manteniendo la posicion, asi hasta querer insertar un elemento ya
-        presente en el hijo.
-        
-        Luego se copian los elementos restantes de sol_b en el hijo.
-        
-        @param sol_a: Primera solucion
-        @param sol_b: Segunda solucion
-        @return: lista de hijos
-        """    
+
         child = [-1 for n in range(len(sol_a.solution))]
         k = 0
         
@@ -105,12 +74,7 @@ class GeneticOperators:
         return [GaSolution(child, sol_a.objectives)]
     
     def mutation(self, sol):
-        """
-        Realiza la operación de mutación sobre la solución.
-        Elige dos posiciones aleatorias y realiza un intercambio de elementos
-        
-        @param sol: la solución a mutar
-        """
+
         n = len(sol.solution) - 1
         i = random.randint(0, n)
         j = random.randint(0, n)

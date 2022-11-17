@@ -1,16 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from random import *
 from solution import *
+from random import *
+
 
 class Ant:
 	def __init__(self, beta, ant_number, total_ants, ferom_mat, visib_mats, objectives):
-		""" 
-		@param ferom_mat: matriz de feromonas.
-		@param visib_mats: matrices de visibilidad. Una por objetivo.				 
-		@param objectives:
-		"""
 		self.beta = beta
 		self.ant_number = ant_number
 		self.total_ants = total_ants
@@ -19,10 +15,7 @@ class Ant:
 		self.visib_mats = visib_mats
 		
 	def build_solution(self):
-		"""
-		Construye una solución al problema planteado.
-		"""
-		raise NotImplementedError("build_solution method has to be implemented.")
+		raise NotImplementedError()
 
 	def probability(self, city_number, feasible_nodes):
 		"""
@@ -86,16 +79,14 @@ class MOACSAnt(Ant):
 		self.average_obj = []
 
 		for i in range(len(self.objectives)):
-			self.sum_obj[i] = 0 #inicializar suma de cada objetivo a 0
+			self.sum_obj[i] = 0
 
 		while(len(sol) < sol_len):
 			actual_node = sol[-1]
 			next_node = self.choose_next_node(actual_node, [i for i in range(sol_len) if i not in sol])
 			for j in range(len(self.objectives)):
-				self.sum_obj[j] = self.sum_obj[j] + self.objectives[j].cost_i_to_j(actual_node, next_node) #actualizar la suma de objetivos
-				#self.sum_obj[j] = self.sum_obj[j] + self.objectives[j].mat[actual_node][next_node] #actualizar la suma de objetivos
+				self.sum_obj[j] = self.sum_obj[j] + self.objectives[j].cost_i_to_j(actual_node, next_node) 
 
-			#actualizacion de feromonas
 			self.ferom_mat[actual_node][next_node] = (1 - self.rho) * self.ferom_mat[actual_node][next_node] + self.rho * self.tausubzero
 			sol.append(next_node)
 

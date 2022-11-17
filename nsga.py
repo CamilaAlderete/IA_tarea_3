@@ -14,58 +14,34 @@ import random, math
 class NSGA:
     def __init__(self, num_objectives, genetic_operators, p, q, 
                  cr=1.0, mr=0.1):
-        """
-        @param num_objectives: numero de objetivos
-        @param genetic_operators: objeto que representa a los operadores 
-                                  genéticos
-        @param p: número de variables.
-        @param q: número de soluciones óptimas diferentes deseadas.
-        @param cr: crossover rate
-        @param mr: mutation rate
-        """
         self.num_objectives = num_objectives
         self.genetic_operators = genetic_operators
         self.crossover_rate = cr
         self.mutation_rate = mr
         
-        #calculamos sigma_share de acuerdo a Deb 1999
         self.sigma_share = 0.5 / math.pow(float(q), 1.0/float(p))
     
     def run(self, P, num_generations):
-        """
-        Ejecuta el algoritmo NSGA
-        
-        @param P: la poblacion inicial
-        @param num_generations: el numero maximo de generaciones
-        """
         for i in range(num_generations):
             fronts = self.classify_population(P)
             self.fitness_sharing(fronts)
             del P[:]
-            #juntamos los frentes para formar P
+
             for front in fronts.values():
                 P.extend(front)
             mating_pool = self.selection(P)
             P = self.next_generation(mating_pool, len(P))
 
     def classify_population(self, population):
-        """
-        Clasifica la población en regiones no dominadas.
-        En una primera pasada se calcula el primer frente. Luego, para calcular
-        los demas frentes se basa en la idea de que los elementos en el nuevo
-        frente solo son dominados por elementos que se encuentran en el frente
-        anterior.
-        
-        @param population: la población a clasificar.
-        """
+
         fronts = {}
-        n = {} # {p => k} k individuos dominan a p
-        S = {} # {p => [s1, ... , sn]} p domina a s1 ... sn
+        n = {}
+        S = {}
         for p in population:
             S[p] = []
             n[p] = 0
         
-        fronts[1] = [] #primer frente
+        fronts[1] = [] 
         pop_size = len(population)
         for p in population:
             for q in population:
@@ -79,7 +55,6 @@ class NSGA:
                 p.fitness = float(pop_size)
                 fronts[1].append(p)
         
-        #calcular los demas frentes
         i = 1
         while(len(fronts[i]) != 0):
             next_front = []
@@ -93,17 +68,10 @@ class NSGA:
         return fronts
     
     def fitness_sharing(self, fronts):
-        """
-        Realiza el fitness sharing hasta que cada individuo tenga el 
-        valor de fitness asignado.
-        
-        @param fronts: Diccionario de frentes
-        """
+
         for i, front in fronts.items():
             min_dummy_fitness = 0.0
-            if i > 1: # para las siguientes poblaciones se asigna el dummy 
-                      # fitness como un valor un poco 
-                      # menor al valor mínimo del frente anterior
+            if i > 1: 
                 min_dummy_fitness = min([s.fitness for s in fronts[i-1]])
                 min_dummy_fitness = min_dummy_fitness * 0.8
             for sol in front:
@@ -114,12 +82,6 @@ class NSGA:
                     sol.fitness = sol.fitness / m
         
     def niche_count(self, sol, front):
-        """
-        Calcula el niche count.
-        
-        @param sol: solucion del cual se desea calcular su niche count
-        @param front: el frente al cual pertenece la solucion
-        """
         m = 0.0
         import sys
         uppers = [0 for _ in range(len(sol.objectives))]
@@ -132,7 +94,7 @@ class NSGA:
                     lowers[i] = v
         for r in front:
             if r == sol: continue
-            sh = 0.0 #sharing function value
+            sh = 0.0
             dist = sol.distance(r, uppers, lowers)
             if dist <= self.sigma_share:
                 sh = 1.0 - dist / self.sigma_share
@@ -140,9 +102,6 @@ class NSGA:
         return m + 1
     
     def selection(self, population):
-        """
-        Realiza la selección y retorna el mating_pool
-        """
         pool = []
         pool_size = len(population)
         probs = self.probabilities(population)
@@ -156,10 +115,6 @@ class NSGA:
         return pool
     
     def probabilities(self, population):
-        """
-        Utiliza el fitness de cada solucion para retornar una lista de 
-        probabilidades de seleccionar dicho elemento
-        """
         probs = []
         total_fitness = 0.0
         for p in population:
@@ -169,16 +124,8 @@ class NSGA:
         return probs
     
     def next_generation(self, mating_pool, pop_size):
-        """
-        Crea la siguiente generacion a partir del mating_pool y los operadores 
-        genéticos
-        
-        @param mating_pool: mating pool utilizada para construir la siguiente 
-                            generación de individuos
-        """
         Q = []
         
-        #cruzamiento
         while len(Q) < pop_size:
             parents = []
             parents.append(random.choice(mating_pool))
@@ -198,7 +145,6 @@ class NSGA:
 
 
 def test_qap(n = 5, i = 0):
-    print("Instancia : ", i)
     total_ind = 20
     total_generations = 100
     p, q = 2, 5

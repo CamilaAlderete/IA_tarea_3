@@ -10,17 +10,17 @@ from metric import *
 
 
 def main():
-    # Recibe por terminal el nro. de instancia a resolver.
-    instance = int(sys.argv[1]) - 1
+    # para ejecutar python3 main.py <instancia>
+    instancia = int(sys.argv[1]) - 1
     pareto_set_true = ParetoSet(None)
     
-    pareto_set_nsga = nsga.test_qap(i = instance)
+    pareto_set_nsga = nsga.test_qap(i = instancia)
     pareto_front_nsga = ParetoFront(pareto_set_nsga)
     pareto_set_true.update(pareto_set_nsga.solutions)
     
-    pareto_set_moacs = moacs.testQap(i = instance)
-    pareto_front_moacs = ParetoFront(pareto_set_moacs)    
-    pareto_set_true.update(pareto_set_moacs.solutions)
+    #pareto_set_moacs = moacs.testQap(i = instancia)
+    #pareto_front_moacs = ParetoFront(pareto_set_moacs)    
+    #pareto_set_true.update(pareto_set_moacs.solutions)
     
     pareto_front_true = ParetoFront(pareto_set_true)
     pareto_front_true.draw()
@@ -29,15 +29,15 @@ def main():
     m2 = DistributionMetric(1000.0)
     m3 = ExtensionMetric()
     
-    print("\nNSGA:")
-    print("Distancia: " + str(m1.evaluate(pareto_front_nsga)))
-    print("Distribución:" + str(m2.evaluate(pareto_front_nsga)))
-    print("Extensión:" +  str(m3.evaluate(pareto_front_nsga)))
+    print("Algoritmo NSGA")
+    print("Distancia: ",str(m1.evaluate(pareto_front_nsga)))
+    print("Distribucion:",str(m2.evaluate(pareto_front_nsga)))
+    print("Extension:",str(m3.evaluate(pareto_front_nsga)))
 
-    print("\nMOACS:")
-    print("Distancia: " + str(m1.evaluate(pareto_front_moacs)))
-    print("Distribución:" + str(m2.evaluate(pareto_front_moacs)))
-    print("Extensión:" +  str(m3.evaluate(pareto_front_moacs)))
+    #print("Algoritmo MOACS")
+    #print("Distancia: ",str(m1.evaluate(pareto_front_moacs)))
+    #print("Distribucion:",str(m2.evaluate(pareto_front_moacs)))
+    #print("Extension:",str(m3.evaluate(pareto_front_moacs)))
     
     return 0
 
