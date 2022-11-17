@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from cparser import parse_qap
 from objectivefunction import  QAPObjectiveFunction
 from ga import GaSolution, GeneticOperators
+from cparser import parse_qap
 from solution import ParetoSet, ParetoFront
-
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -144,27 +143,27 @@ class NSGA:
         return Q
 
 
-def test_qap(n = 5, i = 0):
-    total_ind = 20
-    total_generations = 100
+def iniciarQAP(n = 5, i = 0):
+    total_individuos = 20
+    total_generaciones = 100
     p, q = 2, 5
-    op = GeneticOperators()
+    operador = GeneticOperators()
     instancias = parse_qap()
     flux_mats = instancias[i][:-1]
     dist_mat = instancias[i][-1]
-    num_loc = len(flux_mats[0]) #nro de localidades
+    numero_localidades = len(flux_mats[0])
     objs = []
     for cost_mat in flux_mats:
         objs.append(QAPObjectiveFunction(dist_mat, cost_mat))
-    nsga = NSGA(len(objs), op, p, q, mr=0.2)
+    nsga = NSGA(len(objs), operador, p, q, mr=0.2)
     pareto_set = ParetoSet(None)
     for i in range(n):
         pop = []
-        for i in range(total_ind):
-            sol = list(range(num_loc))
+        for i in range(total_individuos):
+            sol = list(range(numero_localidades))
             random.shuffle(sol)
             pop.append(GaSolution(sol, objs))
-        nsga.run(pop, total_generations)
+        nsga.run(pop, total_generaciones)
         pareto_set.update(pop)
     pareto_front = ParetoFront(pareto_set)
     pareto_front.draw()

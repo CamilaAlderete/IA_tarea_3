@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from solution import Solution
-
-import numpy as np
 import random, sys, math
+from solution import Solution
+import numpy as np
 
 class GaSolution(Solution, object):
     def __init__(self, solution, objectives):
@@ -56,22 +55,20 @@ class GeneticOperators:
 
     def crossover(self, sol_a, sol_b):
 
-        child = [-1 for n in range(len(sol_a.solution))]
+        hijo = [-1 for n in range(len(sol_a.solution))]
         k = 0
         
-        #fijar elementos de la primera solucion
         while True:
-            child[k] = sol_a.solution[k]
+            hijo[k] = sol_a.solution[k]
             k = sol_a.solution.index(sol_b.solution[k])
-            if child[k] >= 0:
+            if hijo[k] >= 0:
                 break
         
-        #fijar elementos de la segunda solucion
         for i, s in enumerate(sol_b.solution):
-            if child[i] < 0:
-                child[i] = s
+            if hijo[i] < 0:
+                hijo[i] = s
         
-        return [GaSolution(child, sol_a.objectives)]
+        return [GaSolution(hijo, sol_a.objectives)]
     
     def mutation(self, sol):
 

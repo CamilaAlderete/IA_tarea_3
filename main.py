@@ -13,7 +13,7 @@ def main():
     instancia = int(sys.argv[1]) - 1
     pareto_set_true = ParetoSet(None)
     
-    pareto_set_nsga = nsga.test_qap(i = instancia)
+    pareto_set_nsga = nsga.iniciarQAP(i = instancia)
     pareto_front_nsga = ParetoFront(pareto_set_nsga)
     pareto_set_true.update(pareto_set_nsga.solutions)
     

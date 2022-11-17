@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from solution import *
+from solution import Solution, ParetoSet, ParetoFront
 from random import *
 
 

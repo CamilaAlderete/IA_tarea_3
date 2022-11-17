@@ -3,15 +3,14 @@
 
 import os
 
-qap_instances = ["input" + os.sep + "qapUni.75.0.1.qap.txt", "input" + os.sep + "qapUni.75.p75.1.qap.txt"]
+instanciasQAP = ["input" + os.sep + "qapUni.75.0.1.qap.txt", "input" + os.sep + "qapUni.75.p75.1.qap.txt"]
 
 
 def parse_qap():
-				  # [        instancia uno        ] [        instancia dos 	     ]
-	mat_objs = [] # [ [ [obj 1], [ obj 2], [dist] ],[ [obj 1] , [obj 2] , [dist] ] ]
-	for s, ins in enumerate(qap_instances):
+	mat_objs = [] 
+	for s, ins in enumerate(instanciasQAP):
 		f = open(ins, "r")
-		n = int(f.readline()) # nro localidades
+		n = int(f.readline())
 		mat_objs.append([])
 		for i in range(3):
 			mat_objs[s].append([])
@@ -23,4 +22,4 @@ def parse_qap():
 
 	
 if __name__ == "__main__":
-	print( len(parse_qap()) )
+	print("Len parseado : ",len(parse_qap()) )

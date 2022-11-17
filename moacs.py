@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from cparser import *
 from ant import *
 from solution import *
+from cparser import *
 
 class Moaco():
 	

@@ -3,8 +3,7 @@
 
 class ObjectiveFunction:
     def evaluate(self, solution):
-
-        raise NotImplementedError("evaluate method has to be implemented.")
+        raise NotImplementedError()
     
 
 class QAPObjectiveFunction(ObjectiveFunction):
@@ -13,22 +12,22 @@ class QAPObjectiveFunction(ObjectiveFunction):
         self.flux_mat = flux_mat
         
     def evaluate(self, solution):
-        path = solution.solution
-        path_cost = 0
-        for i in range(len(path)):
-            for j in range(len(path)):
+        camino = solution.solution
+        costo_camino = 0
+        for i in range(len(camino)):
+            for j in range(len(camino)):
                     distance = self.dist_mat[i][j]
-                    flux = self.flux_mat[path[i]][path[j]]
-                    path_cost = path_cost + distance * flux
-        return path_cost
+                    flux = self.flux_mat[camino[i]][camino[j]]
+                    costo_camino = costo_camino + distance * flux
+        return costo_camino
 
     def cost_i_to_j(self, k, l):
-        path = [k, l]
-        path_cost = 0
-        for i in range(len(path)):
-            for j in range(i, len(path)):
+        camino = [k, l]
+        costo_camino = 0
+        for i in range(len(camino)):
+            for j in range(i, len(camino)):
                     distance = self.dist_mat[i][j]
-                    flux = self.flux_mat[path[i]][path[j]]
-                    path_cost = path_cost + distance * flux
-        return path_cost
+                    flux = self.flux_mat[camino[i]][camino[j]]
+                    costo_camino = costo_camino + distance * flux
+        return costo_camino
 

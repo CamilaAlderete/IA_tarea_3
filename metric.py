@@ -20,13 +20,13 @@ class DistanceMetric(Metric):
         self.y_true = y_true
         
     def evaluate(self, pareto_front):
-        suma = 0
+        sum = 0
         for p in pareto_front.pareto_front:
             dist = []
             for y  in self.y_true.pareto_front:
                 dist.append(self.distance(p,y))
-            suma = suma + min(dist)
-        return suma/len(pareto_front.pareto_front)
+            sum = sum + min(dist)
+        return sum/len(pareto_front.pareto_front)
                 
 
         
@@ -35,16 +35,16 @@ class DistributionMetric(Metric):
         self.sigma = sigma
         
     def evaluate(self, pareto_front):
-        suma = 0
+        sum = 0
         for p1 in pareto_front.pareto_front:
             for p2 in pareto_front.pareto_front:
                 if p1 != p2 and self.distance(p1, p2) > self.sigma:
-                    suma = suma + 1
+                    sum = sum + 1
         if len(pareto_front.pareto_front) - 1 > 0:             
-            result = suma/(len(pareto_front.pareto_front) - 1)
+            resul = sum/(len(pareto_front.pareto_front) - 1)
         else:
-            result = suma
-        return result
+            resul = sum
+        return resul
     
 class ExtensionMetric(Metric):
     def evaluate(self, pareto_front):
